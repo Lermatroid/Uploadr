@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="htmltitle">Uploadr</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jsc.js"></script>
+    <script src="/js/download.js" defer></script>
+</head>
+<body onload="onload()">
+  <div id="header">
+
+    <h1 id="title">Uploadr</h1>
+    <p id="subtitle"></p>
+
+  </div>
+  <div id="uploadDiv">
+      <div class="downloadDiv">
+    <a id="downloadButton" href="" download><button class="downloadButton" id="mainButton" style="border:0; cursor: pointer;" type="button">Download</button></a>
+      </div>
+      <div class="downloadDiv" style="margin-top: 10px;">
+        <div class="input-group mb-3" style="max-width: 280px;">
+          <input type="text" class="form-control" aria-describedby="basic-addon2" style="max-width: 280px;" id="urlInput" readonly>
+          <div class="input-group-append">
+            <button class="btn copyButton" type="button" onclick="copyURL()">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div id="imageDiv" style="display: none;">
+        <p id="imageTitle" style="color: #fff; margin-top: 50px;">Image Preview:</p>
+        <img id="imagePreview" src="" alt="preview" style="margin-left: auto; margin-right: auto; width: 50%; margin-bottom: 30px;">
+      </div>
+      <div id="musicDiv" style="display: none;">
+        <p id="musicTitle" style="color: #fff; margin-top: 50px;">Music Preview:</p>
+        <audio id="musicSRC" src="" type="audio/mpeg" style="margin-left: auto; margin-right: auto; width: 50%; margin-bottom: 30px;" controls>
+        </audio>
+      </div>
+      <div id="videoDiv" style="display: none;">
+        <p id="videoTitle" style="color: #fff; margin-top: 50px;">Video Preview:</p>
+        <video id="videoSRC" type="audio/mp4" src="" style="margin-left: auto; margin-right: auto; width: 50%; margin-bottom: 30px;" controls>
+        </video>
+      </div>
+      <br />
+      <div class="downloadDiv">
+      <button style="border:0; cursor: pointer;" class="downloadButton" type="button" onclick="saveFile()" id="saveButton">Bookmark File</button>
+      </div>
+    </div>
+</body>
+</html>

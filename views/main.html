@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="htmltitle">Uploadr</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jsc.js"></script>
+    <script src="/js/main.js" defer></script>
+</head>
+<body onload="onload()">
+  <div id="header">
+
+    <h1 id="title">Uploadr</h1>
+    <p id="subtitle">Upload Unlimited Files Under 5GB</p>
+
+  </div>
+  <div id="uploadDiv">
+
+      <form ref='uploadForm' 
+      id='uploadForm' 
+      onchange="onChangeUpload()"
+      encType="multipart/form-data">
+      <label for="file" class="uploadButton" style="cursor: pointer;">Select A File</label>
+      <input id="file" type="file" name="sampleFile" style="display: none;"/>
+    </form>
+    </div>
+    <div style="display: none;" id="statusDiv">
+      <hr />
+      <h1>Upload Completed</h1>
+      <p style="color: white;" id="msgFromServer"></p>
+
+    </div>
+    <!-- alerts -->
+    <div id="alertDiv" class="downloadDiv hidden" style="position: fixed; bottom: 0; width: 100%; margin-bottom: 20px;">
+    <div class="alertParent">
+      <div id="alertIcon" style="background-color: yellow;" class="alertNarrow">
+        <img class="alertimg" src="/img/alertSymbol.png" alt="alertSymbol" />
+      </div>
+      <div style="background-color: #fff;" class="alertWide">
+        <div id="alertTitle">Alert Title</div>
+        <div style="font-size: 12px;" id="alertText">Alert Text</div>
+      </div>
+    </div>
+    </div>
+</body>
+</html>

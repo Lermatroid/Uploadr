@@ -1,0 +1,27 @@
+{
+  "name": "uploadr",
+  "version": "1.0.0",
+  "description": "A File Upload(e)r",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechHax/Uploadr.git"
+  },
+  "author": "TechHax",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TechHax/Uploadr/issues"
+  },
+  "homepage": "https://github.com/TechHax/Uploadr#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "express-fileupload": "^1.0.0",
+    "express-sanitizer": "^1.0.4",
+    "sqlite3": "^4.0.4"
+  }
+}
