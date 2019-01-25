@@ -4,6 +4,7 @@ var expressSanitizer = require('express-sanitizer');
 var cookieParser = require('cookie-parser');
 var fileUpload = require('express-fileupload');
 var crypto = require('crypto');
+var request = require('request');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSanitizer());
@@ -70,26 +71,37 @@ app.get('/', function(request, response) {
   });
 
   app.post('/api/upload', function(req,res){
-
-    if (Object.keys(req.files).length == 0) {
-      return res.status(400).send('No files were uploaded.');
+    if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+      return res.json({"completed" : "false","msg" : "Please Verify The Captcha BeFore Continuing"});
     }
-  
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let sampleFile = req.files.sampleFile;
-    var fileID = uuidv4();
-    fs.mkdirSync(`./public/uploads/${fileID}`);
+    var secretKey = "6LfRjIwUAAAAAMn5c2kMkv8y2nVyyhNeDT3Bsd4V";
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+    request(verificationUrl,function(error,response,body) {
+      body = JSON.parse(body);
+      // Success will be true or false depending upon captcha validation.
+      if(body.success !== undefined && !body.success) {
+        return res.json({"completed" : "false","msg" : "Failed captcha verification"});
+      }
+      if (Object.keys(req.files).length == 0) {
+        return res.json({"completed": "false", "msg": "No files were selected, please try again."});
+      }
     
-    // Use the mv() method to place the file somewhere on your server
-    sampleFile.mv(`./public/uploads/${fileID}/${req.sanitize(req.files.sampleFile.name)}`, function(err) {
-      if (err)
-        return res.status(500).send(err);
-        var stats = fs.statSync(`./public/uploads/${fileID}/${req.sanitize(req.files.sampleFile.name)}`);
-        var fileSizeInBytes = stats["size"];
-        // INSERT INTO numtest VALUES (ROUND(234.358,1));
-        var fileSize = fileSizeInBytes / 1000000.0;
-        db.run(`INSERT INTO uploads (id, file_name, file_size) VALUES ("${fileID}", "${req.sanitize(req.files.sampleFile.name)}", ROUND(${fileSize},1))`)
-        res.json({"completed": "true", "msg": `Upload worked! You and anyone else can download the file <a href="/f/${fileID}" target="_self">here</a>. Enjoy and thanks for using Uploadr!`});
+      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+      let sampleFile = req.files.sampleFile;
+      var fileID = uuidv4();
+      fs.mkdirSync(`./public/uploads/${fileID}`);
+      
+      // Use the mv() method to place the file somewhere on your server
+      sampleFile.mv(`./public/uploads/${fileID}/${req.sanitize(req.files.sampleFile.name)}`, function(err) {
+        if (err)
+          return res.status(500).send(err);
+          var stats = fs.statSync(`./public/uploads/${fileID}/${req.sanitize(req.files.sampleFile.name)}`);
+          var fileSizeInBytes = stats["size"];
+          // INSERT INTO numtest VALUES (ROUND(234.358,1));
+          var fileSize = fileSizeInBytes / 1000000.0;
+          db.run(`INSERT INTO uploads (id, file_name, file_size) VALUES ("${fileID}", "${req.sanitize(req.files.sampleFile.name)}", ROUND(${fileSize},1))`)
+          res.json({"completed": "true", "msg": `Upload worked! You and anyone else can download the file <a href="/f/${fileID}" target="_self">here</a>. Enjoy and thanks for using Uploadr!`});
+      });
     });
 
   });
@@ -249,6 +261,11 @@ app.get('/', function(request, response) {
 
 
   }); 
+
+  app.get('/vip', function(req, res) {
+    res.sendFile(__dirname + '/views/vip.html');
+  });
+
 
   app.get('/s', function(req, res) {
     res.redirect("/saves")
