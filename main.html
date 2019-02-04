@@ -1,0 +1,57 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="htmltitle">Uploadr</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jsc.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="/js/main.js" defer></script>
+</head>
+<body onload="onload()">
+  <div id="header">
+
+    <h1 id="title">Uploadr</h1>
+    <p id="subtitle">Upload Unlimited Files Under 1GB</p>
+
+  </div>
+  <div id="uploadDiv">
+      <form ref='uploadForm' 
+      id='uploadForm' 
+      onchange="onChangeUpload()"
+      encType="multipart/form-data">
+      <label id="fileLabel" for="file" class="uploadButton hidden" style="cursor: pointer;">Select A File</label>
+      <input id="file" type="file" name="sampleFile" style="display: none;"/>
+      <p style="color: white;">please fill in the CAPTCHA before selecting A file</p>
+      <div class="g-recaptcha" data-sitekey="6LfRjIwUAAAAAHVzhjkPdgtgIiSILWe11NxJjpaP" data-callback="enableBtn" style="display: inline-block;"></div>
+    </form>
+    <div id="loadingDiv" class="hidden">
+    <img src="/img/thonk1.png" alt="ThonkLoadingImage" class="loadingImage" id="loadingImage">
+    <p style="margin-top:40px; color:#fff;" id="loadingText">Uploading</p>
+    </div>
+    </div>
+    <div style="display: none;" id="statusDiv">
+      <hr />
+      <h1 id="statusFromServer">Upload Completed</h1>
+      <p style="color: white;" id="msgFromServer"></p>
+
+    </div>
+    <!-- alerts -->
+    <div id="alertDiv" class="downloadDiv hidden" style="position: fixed; bottom: 0; width: 100%; margin-bottom: 20px;">
+    <div class="alertParent">
+      <div id="alertIcon" style="background-color: yellow;" class="alertNarrow">
+        <img class="alertimg" src="/img/alertSymbol.png" alt="alertSymbol" />
+      </div>
+      <div style="background-color: #fff;" class="alertWide">
+        <div id="alertTitle">Alert Title</div>
+        <div style="font-size: 12px;" id="alertText">Alert Text</div>
+      </div>
+    </div>
+    </div>
+</body>
+</html>
