@@ -1,4 +1,5 @@
 function onChangeUpload() {
+  $("#loadingDiv").removeClass("hidden");
   jQuery.ajax({
     type: 'POST',
     url:"/api/upload",
@@ -8,11 +9,13 @@ function onChangeUpload() {
     success: function(returnval) {
         
       if(returnval.completed === "true") {
+        $("#loadingDiv").addClass("hidden");
         $("#msgFromServer").html(returnval.msg);
         $("#statusFromServer").html("Upload Complete!");
         $("#statusDiv").css("display", "block");
         console.log("file upload completed");
       } else if(returnval.completed === "false") {
+        $("#loadingDiv").addClass("hidden");
         $("#msgFromServer").html(returnval.msg);
         $("#statusFromServer").html("Upload Failied.");
         $("#statusDiv").css("display", "block");
@@ -39,4 +42,5 @@ $("#loadingImage").attr("src", `/img/${imgName}.png`);
 
 function enableBtn() {
   $("#file").removeAttr("disabled");
+  $("#fileLabel").removeClass("hidden");
 }
