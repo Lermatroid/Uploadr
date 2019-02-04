@@ -20,15 +20,17 @@ function postCreate() {
     $.post('/backend/admin/login', $("#loginForm").serialize(), function (data) {
         console.log(data);
         var serverr = data;
-        if(serverr.valid === false) {
+        console.log(serverr["valid"]);
+        if(serverr["valid"] === false) {
 
          $(".modal-title").html("Login Failed:");
          $(".modal-body").html(serverr.reason);
          $("#actionbutton").attr("onClick", "location.reload();");
          $("#alertmodal").modal({backdrop: 'static', keyboard: false});
-        } else if(serverr.valid === true) {
-           Cookies.set('uploadr_admin_session', serverr.sessionid, { domain: 'localhost', expires: 30 });
-           Cookies.set('uploadr_admin_id', serverr.uploadradmin, { domain: 'localhost', expires: 30 });
+        } else if(serverr["valid"] === true) {
+            console.log("ran");
+           Cookies.set('uploadr_admin_session', serverr.sessionid, { expires: 30 });
+           Cookies.set('uploadr_admin_id', serverr.uploadradmin, { expires: 30 });
            location.reload();
         } else {
             
