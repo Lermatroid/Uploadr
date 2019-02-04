@@ -88,7 +88,12 @@ app.get('/', function(request, response) {
     
       // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
       let sampleFile = req.files.sampleFile;
+      if(req.files.sampleFile.data.length > 1073741824) {
+        console.log("didnt upload");
+        return res.json({"completed" : "false","msg" : "Your File Was Over 1GB"});
+      }
       var fileID = uuidv4();
+      //1073741824
       fs.mkdirSync(`./public/uploads/${fileID}`);
       
       // Use the mv() method to place the file somewhere on your server
